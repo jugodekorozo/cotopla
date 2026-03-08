@@ -6,12 +6,28 @@ import { C } from "../constants/constants";
 import { scaleColor } from "../utils/utils";
 import { Btn } from "../components/Btn";
 import { ExploreDataPanel } from "../components/ExploreDataPanel";
-import { CourseNarrativePanel } from "../components/CourseNarrativePanel";
 import { DashboardInsights } from "../components/DashboardInsights";
+
+/* ─── Console status chip ─────────────────────────────── */
+function StatusChip({ label, value, color }) {
+  return (
+    <div style={{
+      display: "flex", flexDirection: "column", alignItems: "center",
+      padding: "4px 10px", borderRadius: 7,
+      background: "rgba(0,0,0,0.45)",
+      border: "1px solid #1f222a",
+    }}>
+      <span style={{ fontSize: 8, letterSpacing: 1.4, textTransform: "uppercase", color: "#3a4050", fontWeight: 700, lineHeight: 1, marginBottom: 2 }}>
+        {label}
+      </span>
+      <span style={{ fontSize: 13, fontWeight: 700, color, lineHeight: 1 }}>{value}</span>
+    </div>
+  );
+}
 
 export function DashboardView({
   evaluated, isMobile, encargos, avgByEnc, globalCritAvg, allFinals, ranking, atRisk,
-  course, students, groupAvg,
+  students, groupAvg,
   notesByEncargo, T,
   onNavigateProfile,
   onDownload,
@@ -25,7 +41,6 @@ export function DashboardView({
     gridLine: "rgba(255,255,255,0.16)",
   };
   const [showExplore, setShowExplore] = useState(false);
-  const [showNarrative, setShowNarrative] = useState(false);
   const [drillDown, setDrillDown] = useState(null); // { type:'enc', id } | { type:'dist', grade }
 
   function handleEncClick(data) {
@@ -65,20 +80,61 @@ export function DashboardView({
     avg: +((avgByEnc[e.id] || 0).toFixed(2)),
   }));
 
+  const courseStatus =
+    !evaluated.length ? { label: "SIN DATOS", color: "#3a4050" } :
+    groupAvg >= 3.5 ? { label: "ESTABLE", color: C.green } :
+    groupAvg >= 3.0 ? { label: "ATENCIÓN", color: C.orange } :
+    { label: "RIESGO", color: "#ef4444" };
+
+  /* ── Console header — shown in both states ── */
+  const ConsoleHeader = () => (
+    <div style={{
+      display: "flex", alignItems: "center", gap: 8, flexWrap: "wrap",
+      padding: "8px 12px", marginBottom: 8, borderRadius: 10,
+      background: "rgba(0,0,0,0.45)",
+      border: "1px solid #1a1d24",
+      fontFamily: "'Roboto',sans-serif",
+    }}>
+      <div style={{ display: "flex", alignItems: "center", gap: 6 }}>
+        <span style={{ fontSize: 9, letterSpacing: 2, textTransform: "uppercase", color: "#3a4050", fontWeight: 700 }}>
+          Monitor
+        </span>
+        <span style={{ width: 6, height: 6, borderRadius: "50%", background: courseStatus.color, flexShrink: 0 }} />
+        <span style={{ fontSize: 9, letterSpacing: 1.5, textTransform: "uppercase", fontWeight: 700, color: courseStatus.color }}>
+          {courseStatus.label}
+        </span>
+      </div>
+      <div style={{ flex: 1, height: 1, background: "#1a1d24", minWidth: 10 }} />
+      <div style={{ display: "flex", gap: 6, flexWrap: "wrap" }}>
+        <StatusChip label="Promedio" value={evaluated.length ? groupAvg.toFixed(2) : "—"} color={groupAvg >= 3 ? C.green : "#ef4444"} />
+        <StatusChip label="Evaluados" value={`${evaluated.length}/${students.length}`} color="#06b6d4" />
+        <StatusChip label="En riesgo" value={atRisk.length} color={atRisk.length ? "#ef4444" : C.green} />
+        <StatusChip label="Encargos" value={encargos.length} color={C.orange} />
+      </div>
+    </div>
+  );
+
   if (!evaluated.length) {
     return (
-      <div style={{ padding: "0 24px 24px", flex: 1 }}>
+      <div style={{ padding: "0 20px 20px", flex: 1 }}>
+        <ConsoleHeader />
         <DashboardInsights
           encargos={encargos} avgByEnc={avgByEnc} globalCritAvg={globalCritAvg}
           atRisk={atRisk} groupAvg={groupAvg} evaluated={evaluated}
         />
-        <div className="glass-card edge-light" style={{ background: "transparent", borderRadius: 12, padding: 24, textAlign: "center", color: "#a8a8a8" }}>Sin evaluaciones completas.</div>
+        <div className="glass-card edge-light" style={{ background: "transparent", borderRadius: 12, padding: 24, textAlign: "center", color: "#a8a8a8" }}>
+          Sin evaluaciones completas.
+        </div>
       </div>
     );
   }
 
   return (
     <div style={{ padding: "0 20px 20px", flex: 1 }}>
+
+      {/* Console status header */}
+      <ConsoleHeader />
+
       {/* Insights strip */}
       <DashboardInsights
         encargos={encargos} avgByEnc={avgByEnc} globalCritAvg={globalCritAvg}
@@ -175,8 +231,15 @@ export function DashboardView({
           </div>
           {atRisk.length > 0 && (
             <>
-              <div style={{ fontSize: 12, fontWeight: 700, color: "#ef4444", marginBottom: 4 }}>Alertas</div>
-              {atRisk.map(s => <div key={s.id} style={{ fontSize: 11, color: "#ef4444", padding: "2px 0" }}>⚠ {s.name} — {s.final.toFixed(2)}</div>)}
+              <div style={{ fontSize: 10, fontWeight: 700, color: "#ef4444", textTransform: "uppercase", letterSpacing: 1, marginBottom: 4 }}>
+                ⚠ Alertas activas
+              </div>
+              {atRisk.map(s => (
+                <div key={s.id} style={{ fontSize: 11, color: "#ef4444", padding: "2px 0", display: "flex", justifyContent: "space-between" }}>
+                  <span>{s.name}</span>
+                  <span style={{ fontWeight: 700 }}>{s.final.toFixed(2)}</span>
+                </div>
+              ))}
             </>
           )}
         </div>
@@ -195,7 +258,7 @@ export function DashboardView({
                 cursor: "pointer", fontFamily: "'Roboto',sans-serif",
               }}
             >
-              Cerrar detalle
+              Cerrar
             </button>
           </div>
           {drillRows.length === 0 ? (
@@ -226,7 +289,7 @@ export function DashboardView({
 
       {/* Actions */}
       <div style={{ marginTop: 8, display: "flex", gap: 8, flexWrap: "wrap", alignItems: "center" }}>
-        <Btn small color={C.magenta} onClick={onDownload}>Descargar reporte del dashboard</Btn>
+        <Btn small color={C.magenta} onClick={onDownload}>Exportar datos</Btn>
         <button
           onClick={() => setShowExplore(p => !p)}
           style={{
@@ -237,19 +300,7 @@ export function DashboardView({
             fontFamily: "'Roboto',sans-serif",
           }}
         >
-          {showExplore ? "Ocultar exploración" : "Explorar datos"}
-        </button>
-        <button
-          onClick={() => setShowNarrative(p => !p)}
-          style={{
-            padding: "5px 12px", borderRadius: 8, border: "1px solid #2e2e2e",
-            background: showNarrative ? "#1a1a1a" : "transparent",
-            color: showNarrative ? "#ccc" : "#555",
-            fontSize: 11, fontWeight: 600, cursor: "pointer",
-            fontFamily: "'Roboto',sans-serif",
-          }}
-        >
-          {showNarrative ? "Cerrar narrativa" : "Narrativa del curso"}
+          {showExplore ? "Ocultar tabla" : "Tabla de datos"}
         </button>
       </div>
 
@@ -261,23 +312,6 @@ export function DashboardView({
             avgByEnc={avgByEnc}
             globalCritAvg={globalCritAvg}
             allFinals={allFinals}
-          />
-        </div>
-      )}
-
-      {/* Narrative panel */}
-      {showNarrative && (
-        <div className="panel-minimal" style={{ marginTop: 8 }}>
-          <CourseNarrativePanel
-            course={course}
-            students={students}
-            evaluated={evaluated}
-            ranking={ranking}
-            atRisk={atRisk}
-            avgByEnc={avgByEnc}
-            globalCritAvg={globalCritAvg}
-            groupAvg={groupAvg}
-            encargos={encargos}
           />
         </div>
       )}

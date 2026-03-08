@@ -1,6 +1,7 @@
 import { useNavigate } from "react-router-dom";
 import { CourseCard } from "../components/CourseCard";
 import { getCourseSummary } from "../utils/courseStats";
+import { colors, radius, spacing, typography } from "../design";
 
 export function CoursesView({ courses, setCourses, selCourseId, setSelCourseId, setSelStudent, setSelEncargo, setShowCourseForm, isMobile }) {
   const navigate = useNavigate();
@@ -23,18 +24,18 @@ export function CoursesView({ courses, setCourses, selCourseId, setSelCourseId, 
   const cols = isMobile ? "1fr" : "repeat(auto-fill, minmax(280px, 1fr))";
 
   return (
-    <div style={{ padding: "0 28px 28px", flex: 1 }}>
+    <div style={{ padding: `0 ${spacing[6]}px ${spacing[6]}px`, flex: 1 }}>
       {/* Section header */}
-      <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 16 }}>
+      <div style={{ display: "flex", alignItems: "center", gap: spacing[3] - 2, marginBottom: spacing[4] }}>
         <div style={{ flex: 1, height: 1, background: "#1c1c1c" }} />
-        <span style={{ fontSize: 10, fontWeight: 700, color: "#7a818c", textTransform: "uppercase", letterSpacing: 2 }}>
+        <span style={{ fontSize: typography.size.label, fontWeight: typography.weight.bold, color: colors.neutral.textMuted, textTransform: "uppercase", letterSpacing: 2 }}>
           {courses.length} curso{courses.length !== 1 ? "s" : ""}
         </span>
         <div style={{ flex: 1, height: 1, background: "#1c1c1c" }} />
       </div>
 
       {/* Cards grid */}
-      <div style={{ display: "grid", gridTemplateColumns: cols, gap: 14, alignItems: "start" }}>
+      <div style={{ display: "grid", gridTemplateColumns: cols, gap: spacing[4] - 2, alignItems: "start" }}>
         {courses.map(course => (
           <CourseCard
             key={course.id}
@@ -52,7 +53,7 @@ export function CoursesView({ courses, setCourses, selCourseId, setSelCourseId, 
           className="glass-card glass-hover"
           onClick={() => setShowCourseForm(true)}
           style={{
-            borderRadius: 14,
+            borderRadius: radius.xl - 2,
             border: "2px dashed #252525",
             minHeight: 300,
             display: "flex",
@@ -74,7 +75,7 @@ export function CoursesView({ courses, setCourses, selCourseId, setSelCourseId, 
           }}>
             <span style={{ fontSize: 24, color: "#333", lineHeight: 1 }}>+</span>
           </div>
-          <span style={{ fontSize: 11, color: "#7a818c", textTransform: "uppercase", letterSpacing: 1.5 }}>
+          <span style={{ fontSize: typography.size.bodySmall - 1, color: colors.neutral.textMuted, textTransform: "uppercase", letterSpacing: 1.5 }}>
             Nuevo curso
           </span>
         </div>

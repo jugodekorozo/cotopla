@@ -1,6 +1,7 @@
 import { C } from "../constants/constants";
 import { Btn } from "./Btn";
 import { Input } from "./Input";
+import { spacing, typography } from "../design";
 
 export function EncargosPanel({
   encargos, encTotal, selCorte, isMobile,
@@ -19,12 +20,12 @@ export function EncargosPanel({
   const importedCorteMismatch = rubricPreview && Number(rubricPreview.corte) !== Number(selCorte);
 
   return (
-    <div className="glass-card edge-light" style={{ background: "transparent", padding: "12px 24px", margin: "0 24px", borderRadius: "0 0 12px 12px", borderTop: "1px solid " + C.orange, borderLeft: "none", borderRight: "none" }}>
-      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 8 }}>
-        <span style={{ fontSize: 13, fontWeight: 700, color: C.orange }}>Encargos — Corte {selCorte}</span>
+    <div className="glass-card edge-light" style={{ background: "transparent", padding: `${spacing[3]}px ${spacing[6]}px`, margin: `0 ${spacing[6]}px`, borderRadius: "0 0 12px 12px", borderTop: "1px solid " + C.orange, borderLeft: "none", borderRight: "none" }}>
+      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: spacing[2] }}>
+        <span style={{ fontSize: typography.size.body, fontWeight: typography.weight.bold, color: C.orange }}>Encargos — Corte {selCorte}</span>
         <div style={{ display: "flex", gap: 6 }}>
-          <Btn small color={C.green} onClick={() => setShowEncForm(!showEncForm)}>+ Encargo</Btn>
-          <Btn small color={C.orange} onClick={toggleRubricImport}>Importar JSON</Btn>
+          <Btn small variant="primary" onClick={() => setShowEncForm(!showEncForm)}>+ Encargo</Btn>
+          <Btn small variant="secondary" onClick={toggleRubricImport}>Importar JSON</Btn>
           <Btn small color={C.magenta} onClick={() => setShowCourseForm(true)}>+ Curso</Btn>
         </div>
       </div>
@@ -45,8 +46,8 @@ export function EncargosPanel({
             style={{ width: "100%", minHeight: 110, background: "#111", border: "1px solid #333", borderRadius: 8, color: "#eee", fontSize: 12, padding: 10, fontFamily: "'Roboto',sans-serif", resize: "vertical", boxSizing: "border-box", outline: "none" }}
           />
           <div style={{ display: "flex", gap: 6, marginTop: 8, flexWrap: "wrap" }}>
-            <Btn small color={C.orange} onClick={previewRubricImport}>Previsualizar</Btn>
-            <Btn small color="#555" onClick={toggleRubricImport}>Cerrar</Btn>
+            <Btn small variant="secondary" onClick={previewRubricImport}>Previsualizar</Btn>
+            <Btn small variant="ghost" onClick={toggleRubricImport}>Cerrar</Btn>
           </div>
 
           {rubricImportError && (
@@ -86,7 +87,7 @@ export function EncargosPanel({
                 ))}
               </div>
               <div style={{ marginTop: 8 }}>
-                <Btn small color={C.green} onClick={confirmRubricImport}>Importar rúbrica</Btn>
+                <Btn small variant="primary" onClick={confirmRubricImport}>Importar rúbrica</Btn>
               </div>
             </div>
           )}
@@ -141,8 +142,8 @@ export function EncargosPanel({
                 {showCritForm === e.id ? (
                   <div style={{ display: "flex", gap: 4, marginTop: 4 }}>
                     <Input value={newCrit} onChange={setNewCrit} placeholder="Nuevo criterio" style={{ flex: 1, padding: "2px 6px", fontSize: 11 }} />
-                    <Btn small color={C.green} onClick={() => addCriterion(e.id)} style={{ padding: "2px 8px", fontSize: 10 }}>+</Btn>
-                    <Btn small color="#555" onClick={() => setShowCritForm(null)} style={{ padding: "2px 8px", fontSize: 10 }}>×</Btn>
+                    <Btn small variant="primary" onClick={() => addCriterion(e.id)} style={{ padding: "2px 8px", fontSize: 10 }}>+</Btn>
+                    <Btn small variant="ghost" onClick={() => setShowCritForm(null)} style={{ padding: "2px 8px", fontSize: 10 }}>×</Btn>
                   </div>
                 ) : (
                   <button onClick={() => { setShowCritForm(e.id); setNewCrit(""); }} style={{ background: "none", border: "none", color: C.green, cursor: "pointer", fontSize: 10, marginTop: 4 }}>+ criterio</button>

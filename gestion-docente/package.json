@@ -1,7 +1,8 @@
 {
-  "name": "gestion-docente",
+  "name": "cotopla",
   "private": true,
-  "version": "0.0.0",
+  "version": "0.1.0",
+  "description": "Sistema experimental de evaluación académica por encargos y rúbricas",
   "type": "module",
   "scripts": {
     "dev": "vite",

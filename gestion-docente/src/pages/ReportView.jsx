@@ -2,21 +2,23 @@ import { useMemo, useRef, useState } from "react";
 import { C } from "../constants/constants";
 import { calcEncargoNote, scaleColor } from "../utils/utils";
 import { Btn } from "../components/Btn";
+import { colors, spacing, typography } from "../design";
 import {
   getGeneralReading,
   getEncargoReading,
   getCriteriaReading,
+  getRiskReading,
   getPedagogicRecommendation,
 } from "../utils/narrativa";
 
 const DOC = {
-  shell: "#0b0b0c",
-  paper: "#121214",
-  line: "#232329",
-  text: "#d9dbe1",
-  muted: "#8c919f",
-  serif: "'Iowan Old Style','Palatino Linotype','Book Antiqua','Times New Roman',serif",
-  sans: "'Roboto',system-ui,sans-serif",
+  shell: colors.neutral.bgDark,
+  paper: colors.neutral.surface,
+  line: colors.neutral.border,
+  text: colors.neutral.textSecondary,
+  muted: colors.neutral.textMuted,
+  serif: typography.family.serif,
+  sans: typography.family.sans,
 };
 
 function clamp(v, min, max) {
@@ -340,6 +342,7 @@ export function ReportView({
   const generalReading = getGeneralReading(groupAvg, evaluated, students, atRisk);
   const encargoReading = getEncargoReading(encargos, avgByEnc);
   const criteriaReading = getCriteriaReading(globalCritAvg);
+  const riskReading = getRiskReading(atRisk, evaluated);
   const { rec, actions } = getPedagogicRecommendation(groupAvg, atRisk, evaluated, encargos, avgByEnc);
 
   const encRows = useMemo(
@@ -466,7 +469,7 @@ export function ReportView({
           <Btn small color={C.magenta} onClick={onDownload}>Descargar HTML</Btn>
         </div>
 
-        <div style={{ maxHeight: 700, overflowY: "auto", padding: "22px 24px" }}>
+        <div style={{ padding: `${spacing[6] - 2}px ${spacing[6]}px` }}>
           <header style={{ marginBottom: 20 }}>
             <h1 style={{ fontFamily: DOC.serif, fontSize: 36, fontWeight: 700, lineHeight: 1.16, margin: "0 0 8px", color: "#f4f6fa" }}>
               Informe interactivo de análisis pedagógico
@@ -595,7 +598,7 @@ export function ReportView({
             <SectionTitle n={4} title="Discusión" subtitle="Interpretación" />
             <BodyText>{encargoReading}</BodyText>
             <BodyText>{criteriaReading}</BodyText>
-            <BodyText>{fig5Reading}</BodyText>
+            <BodyText>{riskReading}</BodyText>
           </section>
 
           <section style={{ marginBottom: 8 }}>

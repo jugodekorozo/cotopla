@@ -1,0 +1,36 @@
+export const colors = {
+  brand: {
+    magenta: "#e7027c",
+    magentaDeep: "#a11763",
+    orange: "#f2992e",
+    green: "#6eb42c",
+    red: "#ef4444",
+    yellow: "#eab308",
+  },
+  neutral: {
+    black: "#000000",
+    bgDark: "#0b0b0c",
+    surface: "#121214",
+    surfaceAlt: "#17171b",
+    border: "#232329",
+    input: "#222222",
+    white: "#ffffff",
+    textPrimary: "#FFFFFF",
+    textSecondary: "#D1D5DB",
+    textMuted: "#9CA3AF",
+    textLabel: "#6B7280",
+  },
+  semantic: {
+    success: "#6eb42c",
+    warning: "#f2992e",
+    danger: "#ef4444",
+    selected: "#e7027c",
+  },
+  gradients: {
+    accent: "linear-gradient(120deg,#e7027c,#a11763)",
+    success: "linear-gradient(120deg,#f2992e,#6eb42c)",
+    warning: "linear-gradient(120deg,#e7027c,#f2992e)",
+    edge: "linear-gradient(120deg,#e7027c,#7a1f62,#f2992e)",
+    soft: "linear-gradient(140deg,rgba(255,255,255,0.08),rgba(255,255,255,0.03))",
+  },
+};

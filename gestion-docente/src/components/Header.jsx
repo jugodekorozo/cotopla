@@ -1,14 +1,15 @@
 import { C, G } from "../constants/constants";
 import { Btn } from "./Btn";
 import { useNavigate, useLocation } from "react-router-dom";
+import { colors, radius, spacing, typography } from "../design";
 
 const SEL_STYLE = (T) => ({
   background: T.selectBg,
   border: "1px solid " + T.border,
-  borderRadius: 8,
-  padding: "6px 10px",
-  fontFamily: "'Roboto',sans-serif",
-  fontSize: 12,
+  borderRadius: radius.medium,
+  padding: `${spacing[2] - 2}px ${spacing[3] - 2}px`,
+  fontFamily: typography.family.sans,
+  fontSize: typography.size.bodySmall,
   outline: "none",
   cursor: "pointer",
 });
@@ -32,13 +33,13 @@ export function Header({
         key={view}
         onClick={() => navigate(path)}
         style={{
-          padding: "6px 13px", borderRadius: 8, border: "none",
-          cursor: "pointer", fontWeight: 600, fontSize: 12,
-          whiteSpace: "nowrap", fontFamily: "'Roboto',sans-serif",
+          padding: `${spacing[2] - 2}px ${spacing[3] + 1}px`, borderRadius: radius.medium, border: "none",
+          cursor: "pointer", fontWeight: typography.weight.semibold, fontSize: typography.size.bodySmall,
+          whiteSpace: "nowrap", fontFamily: typography.family.sans,
           background: active ? G.accentGradient : T.navBtn,
-          color: active ? "#fff" : T.navBtnText,
+          color: active ? colors.neutral.textPrimary : T.navBtnText,
           transition: "background 0.15s, color 0.15s, box-shadow 0.15s",
-          boxShadow: active ? "0 0 0 1px rgba(231,2,124,0.28), 0 6px 16px rgba(6,182,212,0.12)" : "none",
+          boxShadow: active ? "0 0 0 1px rgba(231,2,124,0.28), 0 6px 16px rgba(242,153,46,0.12)" : "none",
         }}
       >
         {label}
@@ -65,13 +66,13 @@ export function Header({
       {/* ── Left: Brand + course info ── */}
       <div style={{ display: "flex", flexDirection: "column", gap: 1, minWidth: 0 }}>
         <span style={{
-          fontSize: 9, fontWeight: 700, letterSpacing: 2,
+          fontSize: typography.size.caption, fontWeight: typography.weight.bold, letterSpacing: 2,
           textTransform: "uppercase", color: C.magenta, lineHeight: 1,
         }}>
           Panel de evaluación
         </span>
         <span style={{
-          fontSize: isMobile ? 13 : 15, fontWeight: 700,
+          fontSize: isMobile ? typography.size.body : typography.size.h3, fontWeight: typography.weight.bold,
           color: T.text, lineHeight: 1.2,
           whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis",
           maxWidth: isMobile ? 180 : 280,
@@ -79,7 +80,7 @@ export function Header({
           {course ? course.name : "—"}
         </span>
         {course && (
-          <span style={{ fontSize: 10, color: T.textSoft, lineHeight: 1 }}>
+          <span style={{ fontSize: typography.size.label, color: T.textSoft, lineHeight: 1 }}>
             Grupo {course.group} · Sem {course.semester}
           </span>
         )}
@@ -103,17 +104,17 @@ export function Header({
             <option key={ct.id} value={ct.id}>Corte {ct.id} ({ct.weight}%)</option>
           ))}
         </select>
-        <Btn small color={C.orange} onClick={() => setShowEncPanel(!showEncPanel)}>Encargos</Btn>
+        <Btn small variant="secondary" onClick={() => setShowEncPanel(!showEncPanel)}>Encargos</Btn>
         <button
           onClick={() => setShowCorteEdit(!showCorteEdit)}
           title="Editar cortes"
           style={{
-            padding: "5px 9px", borderRadius: 8,
+            padding: `${spacing[1] + 1}px ${spacing[2] + 1}px`, borderRadius: radius.medium,
             border: "1px solid " + T.border,
             background: showCorteEdit ? T.navBtn : "transparent",
             color: T.textSoft,
-            fontSize: 12, cursor: "pointer",
-            fontFamily: "'Roboto',sans-serif",
+            fontSize: typography.size.bodySmall, cursor: "pointer",
+            fontFamily: typography.family.sans,
           }}
         >⚙</button>
       </div>
@@ -128,20 +129,20 @@ export function Header({
         {/* Divider */}
         <div style={{ width: 1, height: 20, background: T.border, margin: "0 2px", flexShrink: 0 }} />
 
-        <Btn small color={C.green} onClick={exportBackup}>Backup</Btn>
-        <Btn small color="#888" onClick={() => fileInputRef.current && fileInputRef.current.click()}>Cargar</Btn>
+        <Btn small variant="primary" onClick={exportBackup}>Backup</Btn>
+        <Btn small variant="ghost" onClick={() => fileInputRef.current && fileInputRef.current.click()}>Cargar</Btn>
 
         {/* Theme toggle — subtle */}
         <button
           onClick={toggleTheme}
           title={theme === "dark" ? "Cambiar a modo claro" : "Cambiar a modo oscuro"}
           style={{
-            padding: "5px 9px", borderRadius: 8,
+            padding: `${spacing[1] + 1}px ${spacing[2] + 1}px`, borderRadius: radius.medium,
             border: "1px solid " + T.border,
             background: "transparent",
             color: T.textSoft,
-            fontSize: 13, cursor: "pointer",
-            fontFamily: "'Roboto',sans-serif",
+            fontSize: typography.size.body, cursor: "pointer",
+            fontFamily: typography.family.sans,
             lineHeight: 1,
             transition: "border-color 0.2s",
           }}

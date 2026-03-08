@@ -1,6 +1,7 @@
 import { C, SCALE } from "../constants/constants";
 import { avg } from "../utils/utils";
 import { Btn } from "./Btn";
+import { spacing, typography } from "../design";
 
 export function EvalArea({ selStudent, activeEnc, students, encargos, editing, setEditing, saved, onSave, selectedStudents }) {
   if (!selStudent) {
@@ -43,7 +44,7 @@ export function EvalArea({ selStudent, activeEnc, students, encargos, editing, s
           </span>
         </div>
       )}
-      <div style={{ fontSize: 14, fontWeight: 700, marginBottom: 2 }}>{groupCount > 0 ? `${groupCount} estudiantes` : studentName}</div>
+      <div style={{ fontSize: typography.size.h3, fontWeight: typography.weight.bold, marginBottom: 2 }}>{groupCount > 0 ? `${groupCount} estudiantes` : studentName}</div>
       <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 3 }}>
         <span style={{ fontSize: 13, color: C.magenta, fontWeight: 600 }}>{activeEnc.nombre}</span>
         <span style={{ fontSize: 11, color: C.gray }}>({activeEnc.porcentaje}%)</span>
@@ -112,9 +113,9 @@ export function EvalArea({ selStudent, activeEnc, students, encargos, editing, s
         )}
       </div>
 
-      <div style={{ display: "flex", alignItems: "center", justifyContent: "flex-end", marginTop: 6 }}>
+      <div style={{ display: "flex", alignItems: "center", justifyContent: "flex-end", marginTop: spacing[2] - 2 }}>
         {saved && <span className="save-indicator">Guardado</span>}
-        <Btn onClick={onSave} color={saved ? C.green : groupCount > 0 ? C.orange : C.magenta}>
+        <Btn onClick={onSave} variant={saved ? "primary" : groupCount > 0 ? "secondary" : undefined} color={groupCount > 0 ? C.orange : C.magenta}>
           {saved ? "✓ Guardado" : groupCount > 0 ? `Guardar para ${groupCount} estudiantes` : "Guardar"}
         </Btn>
       </div>

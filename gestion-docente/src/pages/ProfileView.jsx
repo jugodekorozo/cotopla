@@ -2,6 +2,7 @@ import { RadarChart, Radar, PolarGrid, PolarAngleAxis, PolarRadiusAxis, Responsi
 import { C } from "../constants/constants";
 import { calcCorteNote, calcEncargoNote, scaleColor, isFullyGraded } from "../utils/utils";
 import { Btn } from "../components/Btn";
+import { chartTheme, colors, spacing, typography } from "../design";
 
 function mean(arr) {
   if (!arr.length) return 0;
@@ -36,7 +37,7 @@ export function ProfileView({ students, grades, profileId, encargos, isMobile, a
 
   if (!st || !sg) {
     return (
-      <div style={{ padding: "28px" }}>
+      <div style={{ padding: `${spacing[6]}px` }}>
         <div className="glass-card edge-light" style={{ borderRadius: 12, padding: 36, textAlign: "center", color: "#777" }}>
           Selecciona un estudiante desde el dashboard.
         </div>
@@ -91,15 +92,15 @@ export function ProfileView({ students, grades, profileId, encargos, isMobile, a
       : "Perfil en zona de riesgo. Priorizar acompañamiento individual y refuerzo sobre criterios estructurales.";
 
   return (
-    <div style={{ padding: "0 20px 20px", flex: 1 }}>
-      <div style={{ maxWidth: 1080, margin: "0 auto", display: "grid", gap: 10 }}>
+    <div style={{ padding: `0 ${spacing[5]}px ${spacing[5]}px`, flex: 1 }}>
+      <div style={{ maxWidth: 1080, margin: "0 auto", display: "grid", gap: spacing[2] + 2 }}>
         <div className="glass-card edge-light edge-light-active" style={{ borderRadius: 14, overflow: "hidden" }}>
           <div style={{ height: 3, background: "linear-gradient(120deg,#e7027c,#f2992e)" }} />
           <div style={{ padding: 14, display: "grid", gridTemplateColumns: isMobile ? "1fr" : "1.3fr 1fr", gap: 12 }}>
             <div>
-              <div style={{ fontSize: 10, letterSpacing: 1.2, textTransform: "uppercase", color: C.gray, marginBottom: 4 }}>Ficha analítica del estudiante</div>
-              <div style={{ fontSize: 24, fontWeight: 700, lineHeight: 1.1, marginBottom: 4 }}>{st.name}</div>
-              <div style={{ fontSize: 11, color: C.gray, marginBottom: 8 }}>ID: {st.id}</div>
+              <div style={{ fontSize: typography.size.label, letterSpacing: 1.2, textTransform: "uppercase", color: colors.neutral.textLabel, marginBottom: 4 }}>Ficha analítica del estudiante</div>
+              <div style={{ fontSize: typography.size.h1, fontWeight: typography.weight.bold, lineHeight: 1.1, marginBottom: 4 }}>{st.name}</div>
+              <div style={{ fontSize: typography.size.bodySmall - 1, color: colors.neutral.textMuted, marginBottom: 8 }}>ID: {st.id}</div>
               <div style={{ display: "flex", flexWrap: "wrap", gap: 6 }}>
                 <span style={{ fontSize: 10, padding: "3px 8px", borderRadius: 999, border: `1px solid ${statusColor}66`, color: statusColor, background: `${statusColor}1a`, fontWeight: 700 }}>{statusLabel}</span>
                 <span style={{ fontSize: 10, padding: "3px 8px", borderRadius: 999, border: "1px solid #333", color: "#bbb", background: "#161616", fontWeight: 600 }}>Ranking {rankText}</span>
@@ -143,9 +144,9 @@ export function ProfileView({ students, grades, profileId, encargos, isMobile, a
             ) : (
               <ResponsiveContainer width="100%" height={260}>
                 <RadarChart data={radarData}>
-                  <PolarGrid stroke={TT.gridLine} />
-                  <PolarAngleAxis dataKey="subject" tick={{ fill: C.gray, fontSize: 9 }} />
-                  <PolarRadiusAxis domain={[0, 5]} tick={{ fill: TT.textMuted, fontSize: 9 }} />
+                <PolarGrid stroke={TT.gridLine || chartTheme.grid.stroke} />
+                <PolarAngleAxis dataKey="subject" tick={chartTheme.axisTickSmall} />
+                <PolarRadiusAxis domain={[0, 5]} tick={chartTheme.axisTickSmall} />
                   <Radar dataKey="student" stroke={C.magenta} fill={C.magenta} fillOpacity={0.28} />
                   <Radar dataKey="group" stroke={C.orange} fill={C.orange} fillOpacity={0.15} />
                 </RadarChart>
@@ -196,7 +197,7 @@ export function ProfileView({ students, grades, profileId, encargos, isMobile, a
         </div>
 
         <div style={{ display: "flex", gap: 6, flexWrap: "wrap" }}>
-          <Btn small color="#555" onClick={onBack}>← Dashboard</Btn>
+          <Btn small variant="ghost" onClick={onBack}>← Dashboard</Btn>
           <Btn small color={C.magenta} onClick={onDownload}>Descargar informe</Btn>
         </div>
       </div>
