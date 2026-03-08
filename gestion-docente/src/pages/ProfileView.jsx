@@ -3,21 +3,7 @@ import { C } from "../constants/constants";
 import { calcCorteNote, calcEncargoNote, scaleColor, isFullyGraded } from "../utils/utils";
 import { Btn } from "../components/Btn";
 import { chartTheme, colors, spacing, typography } from "../design";
-
-function mean(arr) {
-  if (!arr.length) return 0;
-  return arr.reduce((a, b) => a + b, 0) / arr.length;
-}
-
-function stdDev(arr) {
-  if (!arr.length) return 0;
-  const m = mean(arr);
-  return Math.sqrt(mean(arr.map(v => (v - m) ** 2)));
-}
-
-function clamp(v, min, max) {
-  return Math.max(min, Math.min(max, v));
-}
+import { stdDev, clamp } from "../utils/mathUtils";
 
 function StatCard({ label, value, tone = "neutral", helper }) {
   const toneColor = tone === "good" ? C.green : tone === "bad" ? "#ef4444" : tone === "warn" ? C.orange : "#eee";

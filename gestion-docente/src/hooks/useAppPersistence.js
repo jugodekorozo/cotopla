@@ -1,5 +1,8 @@
 import { useEffect, useState } from "react";
 
+const STORAGE_KEY = STORAGE_KEY;
+const AUTOSAVE_DELAY_MS = 800;
+
 export function useAppPersistence(defaultCourses) {
   const [courses, setCourses] = useState(defaultCourses);
   const [selCourseId, setSelCourseId] = useState("c1");
@@ -9,7 +12,7 @@ export function useAppPersistence(defaultCourses) {
 
   useEffect(() => {
     try {
-      const raw = localStorage.getItem("eval-dash-v4");
+      const raw = localStorage.getItem(STORAGE_KEY);
       if (raw) {
         const d = JSON.parse(raw);
         if (d.courses && d.courses.length) {
@@ -32,13 +35,13 @@ export function useAppPersistence(defaultCourses) {
     setAutosaveStatus("saving");
     const timer = setTimeout(() => {
       try {
-        localStorage.setItem("eval-dash-v4", JSON.stringify({ courses, selCourseId }));
+        localStorage.setItem(STORAGE_KEY, JSON.stringify({ courses, selCourseId }));
         setAutosaveStatus("saved");
         setLastSavedAt(new Date());
       } catch {
         setAutosaveStatus("error");
       }
-    }, 800);
+    }, AUTOSAVE_DELAY_MS);
 
     return () => clearTimeout(timer);
   }, [courses, selCourseId, loaded]);

@@ -10,6 +10,7 @@ import {
   getRiskReading,
   getPedagogicRecommendation,
 } from "../utils/narrativa";
+import { mean, stdDev, clamp } from "../utils/mathUtils";
 
 const DOC = {
   shell: colors.neutral.bgDark,
@@ -20,21 +21,6 @@ const DOC = {
   serif: typography.family.serif,
   sans: typography.family.sans,
 };
-
-function clamp(v, min, max) {
-  return Math.max(min, Math.min(max, v));
-}
-
-function mean(arr) {
-  if (!arr.length) return 0;
-  return arr.reduce((a, b) => a + b, 0) / arr.length;
-}
-
-function stdDev(arr) {
-  if (!arr.length) return 0;
-  const m = mean(arr);
-  return Math.sqrt(mean(arr.map(v => (v - m) ** 2)));
-}
 
 function SectionTitle({ n, title, subtitle }) {
   return (

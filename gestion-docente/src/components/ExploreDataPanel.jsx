@@ -2,26 +2,7 @@ import {
   RadarChart, Radar, PolarGrid, PolarAngleAxis, PolarRadiusAxis, ResponsiveContainer
 } from "recharts";
 import { C } from "../constants/constants";
-
-function jitter(index, spread) {
-  const h = Math.sin(index * 9301 + 49297) * 0.5 + 0.5;
-  return (h - 0.5) * spread;
-}
-
-function heatColor(v) {
-  if (v <= 1) return "#ef4444";
-  if (v <= 2) return "#f2992e";
-  if (v <= 3) return "#eab308";
-  if (v <= 4) return "#6eb42c";
-  return "#6eb42c";
-}
-
-function statusTag(type) {
-  if (type === "critical") return { label: "crítico", color: "#ef4444" };
-  if (type === "alert") return { label: "alerta", color: "#f2992e" };
-  if (type === "improving") return { label: "mejorando", color: C.magenta };
-  return { label: "estable", color: "#6eb42c" };
-}
+import { heatColor, jitter, statusTag } from "../utils/colorUtils";
 
 function CardModule({ icon, title, type, status, children, stats, insight }) {
   const st = statusTag(status);
