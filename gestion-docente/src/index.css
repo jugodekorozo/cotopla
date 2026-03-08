@@ -1,0 +1,245 @@
+@import url("https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap");
+
+:root {
+  --t-fast: 120ms;
+  --t-hover: 180ms;
+  --t-panel: 250ms;
+  --t-progress: 300ms;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  font-family: "Roboto", sans-serif;
+}
+
+#root {
+  font-family: inherit;
+}
+
+button,
+input,
+select,
+textarea {
+  font: inherit;
+}
+
+.glass-card {
+  position: relative;
+  background: var(--g-glass, linear-gradient(140deg, rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0.03)));
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  border-radius: 16px;
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  box-shadow:
+    0 8px 32px rgba(0, 0, 0, 0.35),
+    inset 0 1px 0 rgba(255, 255, 255, 0.2);
+}
+
+.glass-card::before {
+  content: "";
+  position: absolute;
+  left: 1px;
+  right: 1px;
+  top: 1px;
+  height: 35%;
+  border-radius: inherit;
+  background: linear-gradient(to bottom, rgba(255, 255, 255, 0.14), rgba(255, 255, 255, 0));
+  pointer-events: none;
+}
+
+.glass-hover {
+  transition: transform var(--t-hover) ease, box-shadow var(--t-hover) ease;
+}
+
+.glass-hover:hover {
+  transform: translateY(-3px);
+  box-shadow:
+    0 14px 36px rgba(0, 0, 0, 0.4),
+    inset 0 1px 0 rgba(255, 255, 255, 0.2);
+}
+
+.edge-light {
+  overflow: hidden;
+}
+
+.edge-light::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  padding: 1px;
+  background: linear-gradient(
+    120deg,
+    rgba(255, 255, 255, 0.02),
+    rgba(255, 255, 255, 0.15),
+    rgba(231, 2, 124, 0.14),
+    rgba(255, 255, 255, 0.04)
+  );
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  opacity: 0.16;
+  transition: opacity 0.2s ease;
+  pointer-events: none;
+}
+
+.edge-light:hover::after {
+  opacity: 0.34;
+}
+
+.edge-light-active::after {
+  opacity: 0.52;
+}
+
+.panel-primary {
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  border-radius: 14px;
+  padding: 12px;
+}
+
+.panel-secondary {
+  background: rgba(255, 255, 255, 0.025);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 12px;
+  padding: 10px;
+}
+
+.panel-minimal {
+  background: rgba(255, 255, 255, 0.018);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 10px;
+  padding: 8px;
+}
+
+.header-premium {
+  position: relative;
+}
+
+.header-premium::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -1px;
+  height: 2px;
+  background: var(--g-accent, linear-gradient(120deg, #e7027c 0%, #7a1f62 52%, #f2992e 100%));
+  opacity: 0.9;
+  pointer-events: none;
+}
+
+.focus-gradient-panel {
+  position: relative;
+}
+
+.focus-gradient-panel::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  padding: 1px;
+  background: var(--g-accent, linear-gradient(120deg, #e7027c 0%, #7a1f62 52%, #f2992e 100%));
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  opacity: 0.35;
+  pointer-events: none;
+}
+
+.student-item {
+  position: relative;
+  overflow: hidden;
+  transition: transform var(--t-fast) ease, box-shadow var(--t-fast) ease, background var(--t-fast) ease, border-color var(--t-fast) ease;
+}
+
+.student-item:hover {
+  transform: translateX(2px);
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.28);
+}
+
+.student-item.student-selected {
+  box-shadow: 0 0 0 1px rgba(231, 2, 124, 0.28), 0 8px 20px rgba(231, 2, 124, 0.1);
+}
+
+.encargo-chip {
+  transition: transform 150ms ease, box-shadow var(--t-fast) ease, opacity var(--t-fast) ease, background var(--t-fast) ease;
+}
+
+.encargo-chip.encargo-active {
+  animation: encargo-pop 150ms ease;
+  box-shadow: 0 0 0 1px rgba(231, 2, 124, 0.28), 0 6px 18px rgba(231, 2, 124, 0.12);
+}
+
+.encargo-chip.encargo-inactive {
+  opacity: 0.86;
+}
+
+.rubric-score-btn {
+  transition: transform var(--t-fast) ease, background var(--t-fast) ease, color var(--t-fast) ease, border-color var(--t-fast) ease;
+}
+
+.rubric-score-btn.score-selected {
+  animation: score-pop var(--t-fast) ease;
+}
+
+.save-success-flash {
+  animation: save-flash 280ms ease;
+}
+
+.save-indicator {
+  font-size: 11px;
+  color: #6eb42c;
+  font-weight: 700;
+  margin-right: 8px;
+  animation: fade-up var(--t-panel) ease;
+}
+
+.report-section {
+  opacity: 0;
+  transform: translateY(10px);
+  transition: opacity var(--t-panel) ease, transform var(--t-panel) ease;
+}
+
+.report-section.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.interactive-card {
+  transition: transform var(--t-hover) ease, box-shadow var(--t-hover) ease;
+}
+
+.interactive-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 14px 30px rgba(0, 0, 0, 0.36);
+}
+
+@keyframes score-pop {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.1); }
+  100% { transform: scale(1); }
+}
+
+@keyframes encargo-pop {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.04); }
+  100% { transform: scale(1); }
+}
+
+@keyframes save-flash {
+  0% { box-shadow: 0 0 0 rgba(110, 180, 44, 0); }
+  50% { box-shadow: 0 0 0 2px rgba(110, 180, 44, 0.22), 0 0 20px rgba(110, 180, 44, 0.16); }
+  100% { box-shadow: 0 0 0 rgba(110, 180, 44, 0); }
+}
+
+@keyframes fade-up {
+  0% { opacity: 0; transform: translateY(4px); }
+  100% { opacity: 1; transform: translateY(0); }
+}
