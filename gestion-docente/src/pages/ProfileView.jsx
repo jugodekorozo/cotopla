@@ -4,6 +4,7 @@ import { calcCorteNote, calcEncargoNote, scaleColor, isFullyGraded } from "../ut
 import { Btn } from "../components/Btn";
 import { chartTheme, colors, spacing, typography } from "../design";
 import { stdDev, clamp } from "../utils/mathUtils";
+import { useTheme } from "../contexts/ThemeContext";
 
 function StatCard({ label, value, tone = "neutral", helper }) {
   const toneColor = tone === "good" ? C.green : tone === "bad" ? "#ef4444" : tone === "warn" ? C.orange : "#eee";
@@ -16,8 +17,8 @@ function StatCard({ label, value, tone = "neutral", helper }) {
   );
 }
 
-export function ProfileView({ students, grades, profileId, encargos, isMobile, avgByEnc, onBack, onDownload, T }) {
-  const TT = T || { gridLine: "#333", textMuted: "#555" };
+export function ProfileView({ students, grades, profileId, encargos, isMobile, avgByEnc, onBack, onDownload }) {
+  const { T: TT } = useTheme();
   const st = students.find(s => s.id === profileId);
   const sg = grades[profileId];
 

@@ -3,6 +3,7 @@ import {
   BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Cell
 } from "recharts";
 import { C } from "../constants/constants";
+import { useTheme } from "../contexts/ThemeContext";
 import { scaleColor } from "../utils/utils";
 import { Btn } from "../components/Btn";
 import { ExploreDataPanel } from "../components/ExploreDataPanel";
@@ -28,18 +29,11 @@ function StatusChip({ label, value, color }) {
 export function DashboardView({
   evaluated, isMobile, encargos, avgByEnc, globalCritAvg, allFinals, ranking, atRisk,
   students, groupAvg,
-  notesByEncargo, T,
+  notesByEncargo,
   onNavigateProfile,
   onDownload,
 }) {
-  const TT = T || {
-    tooltipBg: "#1a1a1a",
-    tooltipText: "#f3f4f6",
-    border: "#4b5563",
-    textSoft: "#d4d4d4",
-    textMuted: "#9a9a9a",
-    gridLine: "rgba(255,255,255,0.16)",
-  };
+  const { T: TT } = useTheme();
   const [showExplore, setShowExplore] = useState(false);
   const [drillDown, setDrillDown] = useState(null); // { type:'enc', id } | { type:'dist', grade }
 

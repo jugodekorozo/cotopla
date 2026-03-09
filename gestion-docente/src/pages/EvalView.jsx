@@ -8,7 +8,7 @@ export function EvalView({
   isMobile, isTablet,
   students, grades, encargos, selStudent, selEncargo,
   selectStudent, removeStudent,
-  showAddStudent, setShowAddStudent, newSt, setNewSt, addStudent,
+  showAddStudent, setShowAddStudent, newStudent, setNewStudent, addStudent,
   selectEncargo,
   editing, setEditing, saved, onSave,
   activeEnc,
@@ -62,8 +62,8 @@ export function EvalView({
 
         {showAddStudent && (
           <div style={{ display: "flex", flexDirection: "column", gap: 4, marginBottom: 8 }}>
-            <Input value={newSt.id} onChange={v => setNewSt(p => ({ ...p, id: v }))} placeholder="ID" />
-            <Input value={newSt.name} onChange={v => setNewSt(p => ({ ...p, name: v }))} placeholder="Nombre" />
+            <Input value={newStudent.id} onChange={v => setNewStudent(p => ({ ...p, id: v }))} placeholder="ID" />
+            <Input value={newStudent.name} onChange={v => setNewStudent(p => ({ ...p, name: v }))} placeholder="Nombre" />
             <Btn small onClick={addStudent}>Agregar</Btn>
           </div>
         )}

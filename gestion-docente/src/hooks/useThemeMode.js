@@ -22,7 +22,7 @@ export function useThemeMode() {
     root.style.setProperty("--g-warning", G.warningGradient);
     root.style.setProperty("--g-danger", G.dangerGradient);
     root.style.setProperty("--g-glass", G.glassGradient);
-  }, [theme, T]);
+  }, [theme]); // eslint-disable-line react-hooks/exhaustive-deps
 
   function toggleTheme() {
     setTheme(t => (t === "dark" ? "light" : "dark"));

@@ -8,10 +8,10 @@ export function EncargosPanel({
   editEncId, setEditEncId,
   showEncForm, setShowEncForm,
   showRubricImport, toggleRubricImport,
-  newEnc, setNewEnc, addEncargo,
+  newEncargo, setNewEncargo, addEncargo,
   rubricRaw, setRubricRaw, rubricPreview, rubricImportError, rubricImportSuccess, previewRubricImport, confirmRubricImport,
   removeEncargo, updateEncargo,
-  showCritForm, setShowCritForm, newCrit, setNewCrit, addCriterion, removeCriterion, renameCriterion,
+  showCritForm, setShowCritForm, newCriterion, setNewCriterion, addCriterion, removeCriterion, renameCriterion,
   setShowCourseForm,
 }) {
   const importedTotal = rubricPreview
@@ -95,9 +95,9 @@ export function EncargosPanel({
       )}
       {showEncForm && (
         <div style={{ display: "flex", gap: 6, marginBottom: 8, flexWrap: "wrap", alignItems: "center" }}>
-          <Input value={newEnc.nombre} onChange={v => setNewEnc(p => ({ ...p, nombre: v }))} placeholder="Nombre del encargo" style={{ flex: "1 1 160px" }} />
-          <Input value={newEnc.descripcion} onChange={v => setNewEnc(p => ({ ...p, descripcion: v }))} placeholder="Descripción" style={{ flex: "1 1 160px" }} />
-          <Input value={newEnc.porcentaje} onChange={v => setNewEnc(p => ({ ...p, porcentaje: v }))} placeholder="%" style={{ flex: "0 0 55px" }} type="number" />
+          <Input value={newEncargo.nombre} onChange={v => setNewEncargo(p => ({ ...p, nombre: v }))} placeholder="Nombre del encargo" style={{ flex: "1 1 160px" }} />
+          <Input value={newEncargo.descripcion} onChange={v => setNewEncargo(p => ({ ...p, descripcion: v }))} placeholder="Descripción" style={{ flex: "1 1 160px" }} />
+          <Input value={newEncargo.porcentaje} onChange={v => setNewEncargo(p => ({ ...p, porcentaje: v }))} placeholder="%" style={{ flex: "0 0 55px" }} type="number" />
           <Btn small onClick={addEncargo}>Crear</Btn>
         </div>
       )}
@@ -141,12 +141,12 @@ export function EncargosPanel({
                 ))}
                 {showCritForm === e.id ? (
                   <div style={{ display: "flex", gap: 4, marginTop: 4 }}>
-                    <Input value={newCrit} onChange={setNewCrit} placeholder="Nuevo criterio" style={{ flex: 1, padding: "2px 6px", fontSize: 11 }} />
+                    <Input value={newCriterion} onChange={setNewCriterion} placeholder="Nuevo criterio" style={{ flex: 1, padding: "2px 6px", fontSize: 11 }} />
                     <Btn small variant="primary" onClick={() => addCriterion(e.id)} style={{ padding: "2px 8px", fontSize: 10 }}>+</Btn>
                     <Btn small variant="ghost" onClick={() => setShowCritForm(null)} style={{ padding: "2px 8px", fontSize: 10 }}>×</Btn>
                   </div>
                 ) : (
-                  <button onClick={() => { setShowCritForm(e.id); setNewCrit(""); }} style={{ background: "none", border: "none", color: C.green, cursor: "pointer", fontSize: 10, marginTop: 4 }}>+ criterio</button>
+                  <button onClick={() => { setShowCritForm(e.id); setNewCriterion(""); }} style={{ background: "none", border: "none", color: C.green, cursor: "pointer", fontSize: 10, marginTop: 4 }}>+ criterio</button>
                 )}
               </div>
             </div>

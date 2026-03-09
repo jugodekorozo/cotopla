@@ -2,6 +2,7 @@ import { C, G } from "../constants/constants";
 import { Btn } from "./Btn";
 import { useNavigate, useLocation } from "react-router-dom";
 import { colors, radius, spacing, typography } from "../design";
+import { useTheme } from "../contexts/ThemeContext";
 
 const SEL_STYLE = (T) => ({
   background: T.selectBg,
@@ -20,10 +21,11 @@ export function Header({
   showEncPanel, setShowEncPanel,
   showCorteEdit, setShowCorteEdit,
   exportBackup, fileInputRef,
-  theme, T, toggleTheme, isMobile,
+  isMobile,
 }) {
   const navigate = useNavigate();
   const location = useLocation();
+  const { theme, T, toggleTheme } = useTheme();
 
   function navBtn(label, view) {
     const path = view === "eval" ? "/" : "/" + view;

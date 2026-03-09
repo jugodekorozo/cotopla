@@ -16,8 +16,8 @@ export function useEncargoActions({
   setSelectedStudents,
   setSaved,
   setSaveError,
-  newEnc,
-  setNewEnc,
+  newEncargoargo,
+  setNewEncargoargo,
   setShowEncForm,
   rubricRaw,
   setRubricRaw,
@@ -25,8 +25,8 @@ export function useEncargoActions({
   setRubricImportError,
   setRubricImportSuccess,
   setShowRubricImport,
-  newCrit,
-  setNewCrit,
+  newCriterionerion,
+  setNewCriterionerion,
   setShowCritForm,
 }) {
   function updateCourse(id, fn) {
@@ -83,14 +83,14 @@ export function useEncargoActions({
   }
 
   function addEncargo() {
-    if (!newEnc.nombre) return;
-    const enc = { id: uid(), nombre: newEnc.nombre, descripcion: newEnc.descripcion, porcentaje: parseInt(newEnc.porcentaje) || 0, criterios: [] };
+    if (!newEncargo.nombre) return;
+    const enc = { id: uid(), nombre: newEncargo.nombre, descripcion: newEncargo.descripcion, porcentaje: parseInt(newEncargo.porcentaje) || 0, criterios: [] };
     updateCourse(selCourseId, c => {
       const encs = { ...(c.encargos || {}) };
       encs[evalKey] = [...(encs[evalKey] || []), enc];
       return { ...c, encargos: encs };
     });
-    setNewEnc({ nombre: "", descripcion: "", porcentaje: "" });
+    setNewEncargo({ nombre: "", descripcion: "", porcentaje: "" });
     setShowEncForm(false);
   }
 
@@ -160,15 +160,15 @@ export function useEncargoActions({
   }
 
   function addCriterion(eid) {
-    if (!newCrit) return;
+    if (!newCriterion) return;
     updateCourse(selCourseId, c => {
       const encs = { ...(c.encargos || {}) };
       encs[evalKey] = (encs[evalKey] || []).map(e =>
-        e.id === eid ? { ...e, criterios: [...e.criterios, { id: uid(), nombre: newCrit }] } : e
+        e.id === eid ? { ...e, criterios: [...e.criterios, { id: uid(), nombre: newCriterion }] } : e
       );
       return { ...c, encargos: encs };
     });
-    setNewCrit("");
+    setNewCriterion("");
     setShowCritForm(null);
   }
 

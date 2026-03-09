@@ -3,10 +3,11 @@ import { Routes, Route, useNavigate } from "react-router-dom";
 
 import { C, DEFAULT_COURSES } from "./constants/constants";
 import { useMedia } from "./hooks/useMedia";
-import { useThemeMode } from "./hooks/useThemeMode";
+import { useTheme } from "./contexts/ThemeContext";
 import { useAppPersistence } from "./hooks/useAppPersistence";
 import { useCourseAnalytics } from "./hooks/useCourseAnalytics";
 import { useCourseActions } from "./hooks/useCourseActions";
+import { useEncargoPanelState } from "./hooks/useEncargoPanelState";
 import { downloadHTML, buildCourseReport, buildDashboardReport, buildStudentReport } from "./utils/reports";
 
 import { Header } from "./components/Header";
@@ -38,23 +39,14 @@ export default function App() {
   const [showCourseForm, setShowCourseForm] = useState(false);
   const [newCourse, setNewCourse] = useState({ name: "", semester: "", group: "" });
   const [showAddStudent, setShowAddStudent] = useState(false);
-  const [newSt, setNewSt] = useState({ id: "", name: "" });
+  const [newStudent, setNewStudent] = useState({ id: "", name: "" });
   const [showCorteEdit, setShowCorteEdit] = useState(false);
   const [showEncPanel, setShowEncPanel] = useState(false);
-  const [showEncForm, setShowEncForm] = useState(false);
-  const [showRubricImport, setShowRubricImport] = useState(false);
-  const [newEnc, setNewEnc] = useState({ nombre: "", descripcion: "", porcentaje: "" });
-  const [rubricRaw, setRubricRaw] = useState("");
-  const [rubricPreview, setRubricPreview] = useState(null);
-  const [rubricImportError, setRubricImportError] = useState("");
-  const [rubricImportSuccess, setRubricImportSuccess] = useState("");
-
   const [selectedStudents, setSelectedStudents] = useState([]);
-  const [editEncId, setEditEncId] = useState(null);
-  const [showCritForm, setShowCritForm] = useState(null);
-  const [newCrit, setNewCrit] = useState("");
 
-  const { theme, T, toggleTheme } = useThemeMode();
+  const encPanelState = useEncargoPanelState();
+
+  const { T } = useTheme();
 
   const {
     courses,
@@ -111,21 +103,10 @@ export default function App() {
     newCourse,
     setNewCourse,
     setShowCourseForm,
-    newSt,
-    setNewSt,
+    newStudent,
+    setNewStudent,
     setShowAddStudent,
-    newEnc,
-    setNewEnc,
-    setShowEncForm,
-    rubricRaw,
-    setRubricRaw,
-    setRubricPreview,
-    setRubricImportError,
-    setRubricImportSuccess,
-    setShowRubricImport,
-    newCrit,
-    setNewCrit,
-    setShowCritForm,
+    ...encPanelState,
   });
 
   function handleDownloadReport() {
@@ -198,9 +179,6 @@ export default function App() {
         exportBackup={actions.exportBackup}
         fileInputRef={fileInputRef}
         importBackup={actions.importBackup}
-        theme={theme}
-        T={T}
-        toggleTheme={toggleTheme}
         isMobile={isMobile}
       />
 
@@ -237,28 +215,13 @@ export default function App() {
           encTotal={encTotal}
           selCorte={selCorte}
           isMobile={isMobile}
-          editEncId={editEncId}
-          setEditEncId={setEditEncId}
-          showEncForm={showEncForm}
-          setShowEncForm={setShowEncForm}
-          showRubricImport={showRubricImport}
+          {...encPanelState}
           toggleRubricImport={actions.toggleRubricImport}
-          newEnc={newEnc}
-          setNewEnc={setNewEnc}
           addEncargo={actions.addEncargo}
-          rubricRaw={rubricRaw}
-          setRubricRaw={setRubricRaw}
-          rubricPreview={rubricPreview}
-          rubricImportError={rubricImportError}
-          rubricImportSuccess={rubricImportSuccess}
           previewRubricImport={actions.previewRubricImport}
           confirmRubricImport={actions.confirmRubricImport}
           removeEncargo={actions.removeEncargo}
           updateEncargo={actions.updateEncargo}
-          showCritForm={showCritForm}
-          setShowCritForm={setShowCritForm}
-          newCrit={newCrit}
-          setNewCrit={setNewCrit}
           addCriterion={actions.addCriterion}
           removeCriterion={actions.removeCriterion}
           renameCriterion={actions.renameCriterion}
@@ -289,8 +252,8 @@ export default function App() {
             removeStudent={actions.removeStudent}
             showAddStudent={showAddStudent}
             setShowAddStudent={setShowAddStudent}
-            newSt={newSt}
-            setNewSt={setNewSt}
+            newStudent={newStudent}
+            setNewStudent={setNewStudent}
             addStudent={actions.addStudent}
             selectEncargo={actions.selectEncargo}
             editing={editing}
@@ -319,7 +282,6 @@ export default function App() {
             students={students}
             groupAvg={groupAvg}
             notesByEncargo={notesByEncargo}
-            T={T}
             onNavigateProfile={(id) => { setProfileId(id); navigate("/profile"); }}
             onDownload={handleDownloadDashboard}
           />
@@ -333,7 +295,6 @@ export default function App() {
             encargos={encargos}
             isMobile={isMobile}
             avgByEnc={avgByEnc}
-            T={T}
             onBack={() => navigate("/dashboard")}
             onDownload={() => handleDownloadStudent(profileId)}
           />

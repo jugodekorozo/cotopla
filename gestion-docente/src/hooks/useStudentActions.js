@@ -8,8 +8,8 @@ export function useStudentActions({
   selectedStudents,
   setSelectedStudents,
   setSaveError,
-  newSt,
-  setNewSt,
+  newStudent,
+  setNewStudent,
   setShowAddStudent,
 }) {
   function updateCourse(id, fn) {
@@ -37,9 +37,9 @@ export function useStudentActions({
   }
 
   function addStudent() {
-    if (!newSt.id || !newSt.name) return;
-    updateCourse(selCourseId, c => ({ ...c, students: [...c.students, { id: newSt.id, name: newSt.name }] }));
-    setNewSt({ id: "", name: "" });
+    if (!newStudent.id || !newStudent.name) return;
+    updateCourse(selCourseId, c => ({ ...c, students: [...c.students, { id: newStudent.id, name: newStudent.name }] }));
+    setNewStudent({ id: "", name: "" });
     setShowAddStudent(false);
   }
 

@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 
-const STORAGE_KEY = STORAGE_KEY;
+const STORAGE_KEY = "eval-dash-v4";
 const AUTOSAVE_DELAY_MS = 800;
 
 export function useAppPersistence(defaultCourses) {
